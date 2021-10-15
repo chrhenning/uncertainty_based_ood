@@ -23,6 +23,17 @@ Documentation can be found in folder [docs](docs). Using [sphinx](https://www.sp
 When using this package in your research project, please consider citing one of our papers for which this package has been developed.
 
 ```
+@misc{dangelo:henning:2021:uncertainty:based:ood,
+      title={Uncertainty-based out-of-distribution detection requires suitable function space priors}, 
+      author={Francesco D'Angelo and Christian Henning},
+      year={2021},
+      eprint={2110.06020},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+```
+
+```
 @inproceedings{henning:dangelo:2021:bayesian:ood,
 title={Are Bayesian neural networks intrinsically good at out-of-distribution detection?},
 author={Christian Henning and Francesco D'Angelo and Benjamin F. Grewe},
@@ -30,3 +41,4 @@ booktitle={ICML Workshop on Uncertainty and Robustness in Deep Learning},
 year={2021},
 url={https://arxiv.org/abs/2107.12248}
 }
+```
