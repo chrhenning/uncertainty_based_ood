@@ -1,6 +1,6 @@
 # Uncertainty-based OOD detection
 
-Exploring the link between uncertainty estimates obtained by "exact" Bayesian inference and out-of-distribution (OOD) detection.
+Exploring the link between uncertainty estimates obtained by "exact" Bayesian inference and out-of-distribution (OOD) detection. [Here](https://slideslive.at/38962915/are-bayesian-neural-networks-intrinsically-good-at-outofdistribution-detection), you can find a talk motivating the project.
 
 ## Prerequisits
 
