@@ -137,12 +137,12 @@ def heatmap(value_grid, grid_X=None, grid_Y=None, title=None, show_title=True,
     if data_in is not None:
         colors = hmisc.get_colorbrewer2_colors(family='Dark2')
         plt.scatter(data_in[data_trgt<.5,0],
-                    data_in[data_trgt<.5,1], c=colors[4])
+                    data_in[data_trgt<.5,1], c=colors[4], s=lw)
         plt.scatter(data_in[data_trgt>=.5,0],
-                    data_in[data_trgt>=.5,1], c=colors[5])
+                    data_in[data_trgt>=.5,1], c=colors[5], s=lw)
 
     if samples_in is not None:
-        plt.scatter(samples_in[:, 0], samples_in[:, 1], c='k')
+        plt.scatter(samples_in[:, 0], samples_in[:, 1], c='k', s=lw)
 
     axes.grid(False)
     axes.set_facecolor('w')
@@ -172,7 +172,8 @@ def plot_predictive_distributions_1dr(data, inputs, pd_samples=None,
                                       tf_writer=None, tf_tag=None, tf_step=None,
                                       title=None, show_title=True, xticks=None,
                                       yticks=None, xlim=None, ylim=None,
-                                      vlines=None, show_legend=True,
+                                      vlines=None, samples_in=None,
+                                      samples_out=None, show_legend=True,
                                       filename=None, out_dir=None,
                                       ts=30, lw=15, ms=5, figsize=(12, 7),
                                       show_plot=True):
@@ -202,6 +203,12 @@ def plot_predictive_distributions_1dr(data, inputs, pd_samples=None,
         ylim (tuple, optional): The y-limits.
         vlines (list, optional): A list of x-positions. For each entry, a
             vertical dotted line will be added.
+        samples_in (numpy.ndarray, optional): 1D array of sample inputs of shape
+            ``[B]``, where ``B`` denotes the batch size. Vertical lines will
+            be added to highlight these input locations.
+        samples_out (numpy.ndarray, optional): Same shape as ``samples_in``.
+            The output values corresponding to the inputs `samples_in``. If
+            provided, scatter points will be added.
         show_legend (bool): Whether the legend should be shown.
         tf_writer: Tensorboard summary writer.
         tf_tag (str): Tensorboard summary tag.
@@ -252,11 +259,21 @@ def plot_predictive_distributions_1dr(data, inputs, pd_samples=None,
         plt.plot(train_x, train_y, 'o', color='k', label='Training Data',
                  markersize=ms)
 
+    if samples_in is not None:
+        for ii, vx in enumerate(samples_in):
+            axes.axvline(x=vx, color=colors[4], lw=lw/6, ls='-', #(0, (1,10))
+                         alpha=.2)
+                         #label='Sampled Input' if ii == 0 else None)
+
+        if samples_out is not None:
+            plt.plot(samples_in, samples_out, 'o', color=colors[4],
+                     label='Sampled Input', markersize=ms)
+
     if pd_mean is not None:
         assert pd_std is not None
 
         cc = colors[1] # '#00678a'
-        plt.plot(inputs, pd_mean, color=cc, label='Pred. dist.', lw=lw / 3.)
+        plt.plot(inputs, pd_mean, color=cc, label='Pred. Dist.', lw=lw / 3.)
 
         plt.fill_between(inputs, pd_mean + pd_std, pd_mean - pd_std,
                          color=cc, alpha=0.3)
@@ -278,7 +295,7 @@ def plot_predictive_distributions_1dr(data, inputs, pd_samples=None,
                                  alpha=0.1)
 
     if show_legend:
-        plt.legend()
+        plt.legend(prop={'size': ts})
 
     #plt.xlabel('$x$', fontsize=ts)
     #plt.ylabel('$y$', fontsize=ts)

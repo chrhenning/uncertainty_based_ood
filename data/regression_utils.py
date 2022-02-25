@@ -45,7 +45,8 @@ def generate_1d_dataset(task_id=0, num_train=20, num_test=100, num_val=None,
         lambda x: np.power(x - 3., 3),
         lambda x: x*np.sin(x),
         lambda x: 0.3*x*(1+np.sin(x)),
-        lambda x: 2*np.sin(x)+np.sin(np.sqrt(2)*x)+np.sin(np.sqrt(3)*x)
+        lambda x: 2*np.sin(x)+np.sin(np.sqrt(2)*x)+np.sin(np.sqrt(3)*x),
+        lambda x: np.sin(x)
     ]
 
     train_domains = [
@@ -55,11 +56,20 @@ def generate_1d_dataset(task_id=0, num_train=20, num_test=100, num_val=None,
         [2, 4],
         [[-0.5,0.5], [1.5,2.5], [4.5,6.0], [9,11]],
         [[4.5,5], [7.5,8.5], [10,11]],
-        [[1.0,1.3], [3.5,3.8], [5.2,5.5]]
+        [[1.0,1.3], [3.5,3.8], [5.2,5.5]],
+        [[0,12.5]]
     ]
 
-    test_domains = [[-5.0, 5.0], [-3, +3], [-2.5, 2.5], [.5, 4.1], [-3, 13],
-                    [-1, 12], [-0.5, 7.0]]
+    test_domains = [
+        [-5.0, 5.0],
+        [-3, +3],
+        [-2.5, 2.5],
+        [.5, 4.1],
+        [-3, 13],
+        [-1, 12],
+        [-0.5, 7.0],
+        [0, 20]
+    ]
 
     val_domains = [
         [-3.5, 3.5],
@@ -68,10 +78,11 @@ def generate_1d_dataset(task_id=0, num_train=20, num_test=100, num_val=None,
         [2, 4],
         [0, 10],
         [3, 12],
-        [-0.5, 7.0]
+        [-0.5, 7.0],
+        [0, 12.5]
     ]
 
-    std = [3, 0.05, 0.05, 0.05, 0.25, 0.6, 0.2]
+    std = [3, 0.05, 0.05, 0.05, 0.25, 0.6, 0.2, 0.3]
 
     data = ToyRegression(train_inter=train_domains[task_id],
                          num_train=num_train, test_inter=test_domains[task_id],

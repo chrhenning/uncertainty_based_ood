@@ -12,8 +12,13 @@ Neural Network Gaussian Processes
     :members:
     :undoc-members:
     :show-inheritance:
-    
+
 .. automodule:: nngp.rbf_net
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+.. automodule:: nngp.standard_kernels
     :members:
     :undoc-members:
     :show-inheritance:

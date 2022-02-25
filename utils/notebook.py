@@ -37,6 +37,7 @@ from nngp.mlp_kernel import MLPKernel
 from nngp.nngp import inference_with_isotropic_gaussian_ll, \
     gen_inference_kernels, cholesky_adaptive_noise
 from nngp.rbf_net import RBFNetKernel
+from nngp import standard_kernels
 from utils.plotting import heatmap
 from utils.misc import calc_regression_acc
 
@@ -111,6 +112,34 @@ def determine_mlp_kernel_func(config_dict):
 
     return func
 
+def determine_classic_kernel_func(config_dict):
+    """Create a function handle for kernel computation of standard kernels.
+
+    This function uses the given config to determine a function handle that
+    translates inputs to kernel values by using the methods implemented in
+    module :mod:`nngp.standard_kernels`.
+
+    Note:
+        The kernel function is determined via the identifier ``'kernel'`` in the
+        dictionary ``params``.
+
+    Args:
+        config_dict (dict): See docstring of function
+            :func:`determine_rbf_net_kernel_func`.
+
+    Returns:
+        (func)
+    """
+    k = config_dict
+
+    assert 'kernel' in k['params'].keys()
+
+    if k['params']['kernel'] == 'rbf':
+        func = lambda X : standard_kernels.rbf(X, **dict(k['kernel_params']))
+    else:
+        raise RuntimeError()
+
+    return func
 
 def compute_kernel_values(kernel_configs, X_test, X_train, Y_train,
                           determine_kernel_func, test_bs=50, out_dir=None,

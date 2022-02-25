@@ -55,7 +55,7 @@ def eval_grid_2d(x_range=(-10, 10), y_range=(-10, 10), res_per_unit=10,
 
     grid_x = np.linspace(start=x_range[0], stop=x_range[1], num=grid_size_x)
     grid_y = np.linspace(start=y_range[0], stop=y_range[1], num=grid_size_y)
-    
+
     grid_X, grid_Y = np.meshgrid(grid_x, grid_y)
     grid_XY = np.vstack([grid_X.ravel(), grid_Y.ravel()]).T
 
